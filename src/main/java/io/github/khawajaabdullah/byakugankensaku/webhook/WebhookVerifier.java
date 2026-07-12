@@ -6,10 +6,14 @@ import org.apache.commons.codec.digest.HmacUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 
 public final class WebhookVerifier {
+
+  private static final Charset UTF_8 = StandardCharsets.UTF_8;
+  private static final String ASSIGNMENT_OPERATOR = "=";
 
   private WebhookVerifier() {
   }
@@ -18,19 +22,27 @@ public final class WebhookVerifier {
     if (StringUtils.isBlank(secret)) {
       throw new IllegalArgumentException("Secret cannot be null or empty");
     }
+
     if (StringUtils.isBlank(signature)) {
       throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Missing signature");
     }
-    String[] signatureParts = signature.split("=");
-    if (signatureParts.length != 2 || StringUtils.isBlank(signatureParts[0]) || StringUtils.isBlank(signatureParts[1])) {
+
+    String[] parts = signature.split(ASSIGNMENT_OPERATOR);
+    if (parts.length != 2 || StringUtils.isBlank(parts[0]) || StringUtils.isBlank(parts[1])) {
       throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Invalid signature format");
     }
-    if (!hmacAlgorithm.getShortName().equals(signatureParts[0])) {
-      throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Invalid signature algorithm");
+
+    String providedPrefix = parts[0];
+    String providedHex = parts[1];
+
+    if (!hmacAlgorithm.getShortName().equalsIgnoreCase(providedPrefix)) {
+      throw new ResponseStatusException(HttpStatus.UNAUTHORIZED,
+          "Algorithm mismatch. Expected " + hmacAlgorithm.getShortName() + " but got " + providedPrefix);
     }
-    byte[] providedDigest = signatureParts[1].getBytes(StandardCharsets.UTF_8);
-    byte[] expectedDigest = new HmacUtils(hmacAlgorithm.getName(), secret).hmacHex(payload).getBytes(StandardCharsets.UTF_8);
-    if (!MessageDigest.isEqual(providedDigest, expectedDigest)) {
+
+    String expectedHex = new HmacUtils(hmacAlgorithm.getName(), secret).hmacHex(payload);
+
+    if (!MessageDigest.isEqual(providedHex.getBytes(UTF_8), expectedHex.getBytes(UTF_8))) {
       throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Invalid signature");
     }
   }
