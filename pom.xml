@@ -30,6 +30,7 @@
         <java.version>21</java.version>
         <org.springframework.ai.version>2.0.0</org.springframework.ai.version>
         <github-api.version>1.330</github-api.version>
+        <commons-codec.version>1.22.0</commons-codec.version>
     </properties>
     <dependencies>
         <dependency>
@@ -44,6 +45,11 @@
             <groupId>org.kohsuke</groupId>
             <artifactId>github-api</artifactId>
             <version>${github-api.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>commons-codec</groupId>
+            <artifactId>commons-codec</artifactId>
+            <version>${commons-codec.version}</version>
         </dependency>
 
         <dependency>
