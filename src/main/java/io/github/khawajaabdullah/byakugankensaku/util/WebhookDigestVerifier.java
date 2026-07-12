@@ -1,6 +1,5 @@
-package io.github.khawajaabdullah.byakugankensaku.webhook;
+package io.github.khawajaabdullah.byakugankensaku.util;
 
-import io.github.khawajaabdullah.byakugankensaku.util.HmacAlgorithm;
 import io.micrometer.common.util.StringUtils;
 import org.apache.commons.codec.digest.HmacUtils;
 import org.springframework.http.HttpStatus;
@@ -10,12 +9,12 @@ import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 
-public final class WebhookVerifier {
+public final class WebhookDigestVerifier {
 
   private static final Charset UTF_8 = StandardCharsets.UTF_8;
   private static final String ASSIGNMENT_OPERATOR = "=";
 
-  private WebhookVerifier() {
+  private WebhookDigestVerifier() {
   }
 
   public static void verify(String signature, HmacAlgorithm hmacAlgorithm, String secret, String payload) {
