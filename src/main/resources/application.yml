@@ -5,10 +5,7 @@ spring:
     ollama:
       base-url: http://localhost:11434
       chat:
-        model: qwen2.5-coder:1.5b
-app:
-  github:
-    api:
-     token: ${GH_API_TOKEN}
-    webhook:
-      secret: ${GH_WEBHOOK_SECRET}
+        model: qwen2.5-coder:7b
+github:
+  apiToken: ${GH_API_TOKEN}
+  webhookSecret: ${GH_WEBHOOK_SECRET}

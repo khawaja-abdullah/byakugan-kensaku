@@ -1,7 +1,9 @@
 package io.github.khawajaabdullah.byakugankensaku.util;
 
+import lombok.Getter;
 import org.apache.commons.codec.digest.HmacAlgorithms;
 
+@Getter
 public enum HmacAlgorithm {
 
   HMAC_SHA_256(HmacAlgorithms.HMAC_SHA_256, "sha256"),
@@ -15,14 +17,6 @@ public enum HmacAlgorithm {
   HmacAlgorithm(HmacAlgorithms name, String shortName) {
     this.name = name;
     this.shortName = shortName;
-  }
-
-  public HmacAlgorithms getName() {
-    return name;
-  }
-
-  public String getShortName() {
-    return shortName;
   }
 
 }

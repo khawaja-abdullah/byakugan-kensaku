@@ -9,12 +9,12 @@ import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 
-public final class WebhookDigestVerifier {
+public final class HmacDigestVerifier {
 
   private static final Charset UTF_8 = StandardCharsets.UTF_8;
   private static final String ASSIGNMENT_OPERATOR = "=";
 
-  private WebhookDigestVerifier() {
+  private HmacDigestVerifier() {
   }
 
   public static void verify(String signature, HmacAlgorithm hmacAlgorithm, String secret, String payload) {
