@@ -1,6 +1,8 @@
 package io.github.khawajaabdullah.byakugankensaku.webhook;
 
+import io.github.khawajaabdullah.byakugankensaku.util.HmacAlgorithm;
 import org.slf4j.Logger;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 
 @RequestMapping("/github")
@@ -9,18 +11,15 @@ public class GithubWebhookController {
 
   private static final Logger LOGGER = org.slf4j.LoggerFactory.getLogger(GithubWebhookController.class);
 
-  private final GithubWebhookVerifier githubWebhookVerifier;
-
-  public GithubWebhookController(GithubWebhookVerifier githubWebhookVerifier) {
-    this.githubWebhookVerifier = githubWebhookVerifier;
-  }
+  @Value("${app.github.webhook.secret}")
+  String githubWebhookSecret;
 
   @PostMapping("/webhook")
   public void handleWebhook(@RequestHeader("X-Github-Hook-Id") String githubHookId,
                             @RequestHeader("X-GitHub-Event") String githubEvent,
                             @RequestHeader("X-Hub-Signature-256") String hubSignature256,
                             @RequestBody String payload) {
-    githubWebhookVerifier.verify(hubSignature256, payload);
+    WebhookVerifier.verify(hubSignature256, HmacAlgorithm.HMAC_SHA_256, githubWebhookSecret, payload);
     LOGGER.info("Webhook received:- id: {}, event: {}, payload: {}", githubHookId, githubEvent, payload);
   }
 
