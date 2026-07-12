@@ -1,8 +1,8 @@
 package io.github.khawajaabdullah.byakugankensaku.service;
 
-import io.github.khawajaabdullah.byakugankensaku.dto.FileDiff;
+import io.github.khawajaabdullah.byakugankensaku.dto.domain.FileDiff;
 import io.github.khawajaabdullah.byakugankensaku.dto.github.PullRequestEvent;
-import io.github.khawajaabdullah.byakugankensaku.dto.ReviewComment;
+import io.github.khawajaabdullah.byakugankensaku.dto.domain.ReviewComment;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 

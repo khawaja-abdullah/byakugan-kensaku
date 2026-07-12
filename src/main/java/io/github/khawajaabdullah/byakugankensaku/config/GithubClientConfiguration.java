@@ -17,7 +17,7 @@ public class GithubClientConfiguration {
   public GitHub github(GithubProperty githubProperty) {
     String githubApiToken = githubProperty.getApiToken();
     if (StringUtils.isBlank(githubApiToken)) {
-      throw new ByakuganKensakuException("GitHub API token is not configured. Set 'github.api.token' in application properties.");
+      throw new ByakuganKensakuException("GitHub API token is not configured. Set 'github.apiToken' in application properties.");
     }
     try {
       return new GitHubBuilder()

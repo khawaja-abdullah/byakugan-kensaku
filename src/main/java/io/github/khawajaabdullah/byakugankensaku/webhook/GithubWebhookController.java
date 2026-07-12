@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import io.github.khawajaabdullah.byakugankensaku.dto.github.PullRequestEvent;
 import io.github.khawajaabdullah.byakugankensaku.exception.ByakuganKensakuException;
 import io.github.khawajaabdullah.byakugankensaku.service.PullRequestReviewService;
+import io.github.khawajaabdullah.byakugankensaku.util.Constant;
 import io.github.khawajaabdullah.byakugankensaku.util.GithubProperty;
 import io.github.khawajaabdullah.byakugankensaku.util.HmacAlgorithm;
 import io.github.khawajaabdullah.byakugankensaku.util.HmacDigestVerifier;
@@ -17,14 +18,14 @@ import org.springframework.web.bind.annotation.*;
 public class GithubWebhookController {
 
   private final GithubProperty githubProperty;
-  private final PullRequestReviewService pullRequestReviewService;
   private final ObjectMapper objectMapper;
+  private final PullRequestReviewService pullRequestReviewService;
 
-  public GithubWebhookController(GithubProperty githubProperty, PullRequestReviewService pullRequestReviewService,
-                                 ObjectMapper objectMapper) {
+  public GithubWebhookController(GithubProperty githubProperty, ObjectMapper objectMapper,
+                                 PullRequestReviewService pullRequestReviewService) {
     this.githubProperty = githubProperty;
-    this.pullRequestReviewService = pullRequestReviewService;
     this.objectMapper = objectMapper;
+    this.pullRequestReviewService = pullRequestReviewService;
   }
 
   @PostMapping("/webhook")
@@ -34,14 +35,14 @@ public class GithubWebhookController {
                             @RequestBody String payload) {
     HmacDigestVerifier.verify(hubSignature256, HmacAlgorithm.HMAC_SHA_256, githubProperty.getWebhookSecret(), payload);
     log.info("Webhook received:- id: {}, event: {}, payload: {}", githubHookId, githubEvent, payload);
-    if ("pull_request".equals(githubEvent)) {
+    if (Constant.PULL_REQUEST_EVENT.equals(githubEvent)) {
       PullRequestEvent pullRequestEvent;
       try {
         pullRequestEvent = objectMapper.readValue(payload, PullRequestEvent.class);
       } catch (JsonProcessingException e) {
         throw new ByakuganKensakuException("Failed to deserialize pull request event: " + e.getMessage(), e);
       }
-      if (pullRequestEvent == null || "closed".equals(pullRequestEvent.action())) {
+      if (pullRequestEvent == null || !Constant.REVIEWABLE_PULL_REQUEST_EVENT_ACTIONS.contains(pullRequestEvent.action())) {
         return;
       }
       pullRequestReviewService.review(pullRequestEvent);

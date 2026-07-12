@@ -3,8 +3,8 @@ package io.github.khawajaabdullah.byakugankensaku.service;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import io.github.khawajaabdullah.byakugankensaku.dto.FileDiff;
-import io.github.khawajaabdullah.byakugankensaku.dto.ReviewComment;
+import io.github.khawajaabdullah.byakugankensaku.dto.domain.FileDiff;
+import io.github.khawajaabdullah.byakugankensaku.dto.domain.ReviewComment;
 import io.github.khawajaabdullah.byakugankensaku.exception.ByakuganKensakuException;
 import io.micrometer.common.util.StringUtils;
 import lombok.extern.slf4j.Slf4j;
@@ -50,18 +50,19 @@ public class OllamaCodeReviewService {
   }
 
   public List<ReviewComment> review(FileDiff fileDiff) {
-    log.info(fileDiff.patch());
+    String formattedPrompt = PROMPT.formatted(fileDiff.patch());
+    log.info("Sending prompt to code reviewer:- \n{}", formattedPrompt);
     String response = chatClient.prompt()
-        .user(PROMPT.formatted(fileDiff.patch()))
+        .user(formattedPrompt)
         .call()
         .content();
-    log.info("Ollama code reviewer says: {}", response);
+    log.info("Code reviewer responded:- \n{}", response);
     if (StringUtils.isBlank(response)) {
       return Collections.emptyList();
     }
-    response = response.replace("```json", "").replace("```", "").trim();
+    String sanitizedResponse = response.replace("```json", "").replace("```", "").trim();
     try {
-      return objectMapper.readValue(response, new TypeReference<List<ReviewComment>>() {
+      return objectMapper.readValue(sanitizedResponse, new TypeReference<List<ReviewComment>>() {
       });
     } catch (JsonProcessingException e) {
       throw new ByakuganKensakuException("Failed to deserialize review comments from response: " + e.getMessage(), e);

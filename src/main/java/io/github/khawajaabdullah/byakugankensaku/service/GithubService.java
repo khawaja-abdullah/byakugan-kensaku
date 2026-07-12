@@ -1,8 +1,8 @@
 package io.github.khawajaabdullah.byakugankensaku.service;
 
-import io.github.khawajaabdullah.byakugankensaku.dto.FileDiff;
+import io.github.khawajaabdullah.byakugankensaku.dto.domain.FileDiff;
 import io.github.khawajaabdullah.byakugankensaku.dto.github.PullRequestEvent;
-import io.github.khawajaabdullah.byakugankensaku.dto.ReviewComment;
+import io.github.khawajaabdullah.byakugankensaku.dto.domain.ReviewComment;
 import io.github.khawajaabdullah.byakugankensaku.exception.ByakuganKensakuException;
 import io.micrometer.common.util.StringUtils;
 import org.kohsuke.github.GHPullRequest;

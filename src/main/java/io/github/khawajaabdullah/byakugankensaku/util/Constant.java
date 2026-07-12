@@ -1,0 +1,20 @@
+package io.github.khawajaabdullah.byakugankensaku.util;
+
+import java.util.List;
+
+public final class Constant {
+
+  public static final String PULL_REQUEST_EVENT = "pull_request";
+  public static final String PULL_REQUEST_EVENT_ACTION_OPENED = "opened";
+  public static final String PULL_REQUEST_EVENT_ACTION_REOPENED = "reopened";
+  public static final String PULL_REQUEST_EVENT_ACTION_SYNCHRONIZE = "synchronize";
+  public static final List<String> REVIEWABLE_PULL_REQUEST_EVENT_ACTIONS = List.of(
+      PULL_REQUEST_EVENT_ACTION_OPENED,
+      PULL_REQUEST_EVENT_ACTION_REOPENED,
+      PULL_REQUEST_EVENT_ACTION_SYNCHRONIZE
+  );
+
+  private Constant() {
+  }
+
+}
