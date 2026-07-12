@@ -1,0 +1,8 @@
+spring:
+  application:
+    name: byakugan-kensaku
+  ai:
+    ollama:
+      base-url: http://localhost:11434
+      chat:
+        model: qwen2.5-coder:1.5b
