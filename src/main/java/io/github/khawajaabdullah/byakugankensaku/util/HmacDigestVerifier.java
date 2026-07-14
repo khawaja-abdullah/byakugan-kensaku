@@ -5,14 +5,9 @@ import org.apache.commons.codec.digest.HmacUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 
 public final class HmacDigestVerifier {
-
-  private static final Charset UTF_8 = StandardCharsets.UTF_8;
-  private static final String ASSIGNMENT_OPERATOR = "=";
 
   private HmacDigestVerifier() {
   }
@@ -26,7 +21,7 @@ public final class HmacDigestVerifier {
       throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Missing signature");
     }
 
-    String[] parts = signature.split(ASSIGNMENT_OPERATOR);
+    String[] parts = signature.split(Constant.ASSIGNMENT_OPERATOR);
     if (parts.length != 2 || StringUtils.isBlank(parts[0]) || StringUtils.isBlank(parts[1])) {
       throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Invalid signature format");
     }
@@ -41,7 +36,7 @@ public final class HmacDigestVerifier {
 
     String expectedHex = new HmacUtils(hmacAlgorithm.getName(), secret).hmacHex(payload);
 
-    if (!MessageDigest.isEqual(providedHex.getBytes(UTF_8), expectedHex.getBytes(UTF_8))) {
+    if (!MessageDigest.isEqual(providedHex.getBytes(Constant.UTF_8), expectedHex.getBytes(Constant.UTF_8))) {
       throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Invalid signature");
     }
   }

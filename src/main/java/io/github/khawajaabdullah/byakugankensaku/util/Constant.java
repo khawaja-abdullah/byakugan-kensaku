@@ -1,8 +1,13 @@
 package io.github.khawajaabdullah.byakugankensaku.util;
 
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 public final class Constant {
+
+  public static final Charset UTF_8 = StandardCharsets.UTF_8;
+  public static final String ASSIGNMENT_OPERATOR = "=";
 
   public static final String PULL_REQUEST_EVENT = "pull_request";
   public static final String PULL_REQUEST_EVENT_ACTION_OPENED = "opened";

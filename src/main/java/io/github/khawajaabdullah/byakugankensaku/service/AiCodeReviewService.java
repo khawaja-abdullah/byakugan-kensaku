@@ -16,7 +16,7 @@ import java.util.List;
 
 @Slf4j
 @Service
-public class OllamaCodeReviewService {
+public class AiCodeReviewService {
 
   private static final String PROMPT = """
       You are an expert Java code reviewer. Review the following git diff and identify:
@@ -44,19 +44,19 @@ public class OllamaCodeReviewService {
   private final ChatClient chatClient;
   private final ObjectMapper objectMapper;
 
-  public OllamaCodeReviewService(ChatClient chatClient, ObjectMapper objectMapper) {
+  public AiCodeReviewService(ChatClient chatClient, ObjectMapper objectMapper) {
     this.chatClient = chatClient;
     this.objectMapper = objectMapper;
   }
 
   public List<ReviewComment> review(FileDiff fileDiff) {
     String formattedPrompt = PROMPT.formatted(fileDiff.patch());
-    log.info("Sending prompt to code reviewer:- \n{}", formattedPrompt);
+    log.info("Sending prompt to AI code reviewer:- \n{}", formattedPrompt);
     String response = chatClient.prompt()
         .user(formattedPrompt)
         .call()
         .content();
-    log.info("Code reviewer responded:- \n{}", response);
+    log.info("AI Code reviewer responded:- \n{}", response);
     if (StringUtils.isBlank(response)) {
       return Collections.emptyList();
     }
@@ -65,7 +65,7 @@ public class OllamaCodeReviewService {
       return objectMapper.readValue(sanitizedResponse, new TypeReference<List<ReviewComment>>() {
       });
     } catch (JsonProcessingException e) {
-      throw new ByakuganKensakuException("Failed to deserialize review comments from response: " + e.getMessage(), e);
+      throw new ByakuganKensakuException("Failed to parse review comments from response: " + e.getMessage(), e);
     }
   }
 

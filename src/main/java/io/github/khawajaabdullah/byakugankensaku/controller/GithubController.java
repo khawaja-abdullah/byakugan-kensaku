@@ -1,4 +1,4 @@
-package io.github.khawajaabdullah.byakugankensaku.webhook;
+package io.github.khawajaabdullah.byakugankensaku.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -15,14 +15,14 @@ import org.springframework.web.bind.annotation.*;
 @Slf4j
 @RequestMapping("/github")
 @RestController
-public class GithubWebhookController {
+public class GithubController {
 
   private final GithubProperty githubProperty;
   private final ObjectMapper objectMapper;
   private final PullRequestReviewService pullRequestReviewService;
 
-  public GithubWebhookController(GithubProperty githubProperty, ObjectMapper objectMapper,
-                                 PullRequestReviewService pullRequestReviewService) {
+  public GithubController(GithubProperty githubProperty, ObjectMapper objectMapper,
+                          PullRequestReviewService pullRequestReviewService) {
     this.githubProperty = githubProperty;
     this.objectMapper = objectMapper;
     this.pullRequestReviewService = pullRequestReviewService;
