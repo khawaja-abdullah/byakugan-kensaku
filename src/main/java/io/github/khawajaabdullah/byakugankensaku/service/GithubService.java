@@ -1,10 +1,11 @@
 package io.github.khawajaabdullah.byakugankensaku.service;
 
 import io.github.khawajaabdullah.byakugankensaku.dto.domain.FileDiff;
-import io.github.khawajaabdullah.byakugankensaku.dto.github.PullRequestEvent;
 import io.github.khawajaabdullah.byakugankensaku.dto.domain.ReviewComment;
+import io.github.khawajaabdullah.byakugankensaku.dto.github.PullRequestEvent;
 import io.github.khawajaabdullah.byakugankensaku.exception.ByakuganKensakuException;
 import io.micrometer.common.util.StringUtils;
+import lombok.RequiredArgsConstructor;
 import org.kohsuke.github.GHPullRequest;
 import org.kohsuke.github.GHRepository;
 import org.kohsuke.github.GitHub;
@@ -14,13 +15,10 @@ import java.io.IOException;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class GithubService {
 
   private final GitHub github;
-
-  public GithubService(GitHub github) {
-    this.github = github;
-  }
 
   public List<FileDiff> getDiff(PullRequestEvent pullRequestEvent) {
     try {

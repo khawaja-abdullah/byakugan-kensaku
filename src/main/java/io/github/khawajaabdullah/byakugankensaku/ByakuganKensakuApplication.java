@@ -6,9 +6,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.scheduling.annotation.EnableAsync;
 
+@SpringBootApplication
 @EnableAsync
 @EnableConfigurationProperties(GithubProperty.class)
-@SpringBootApplication
 public class ByakuganKensakuApplication {
 
   public static void main(String[] args) {

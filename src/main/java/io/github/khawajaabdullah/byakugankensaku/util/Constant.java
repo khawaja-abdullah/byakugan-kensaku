@@ -6,6 +6,10 @@ import java.util.List;
 
 public final class Constant {
 
+  public static final String HEADER_GITHUB_HOOK_ID = "X-Github-Hook-Id";
+  public static final String HEADER_GITHUB_EVENT = "X-GitHub-Event";
+  public static final String HEADER_HUB_SIGNATURE_256 = "X-Hub-Signature-256";
+
   public static final Charset UTF_8 = StandardCharsets.UTF_8;
   public static final String ASSIGNMENT_OPERATOR = "=";
 
