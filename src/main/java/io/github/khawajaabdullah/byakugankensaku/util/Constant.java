@@ -1,7 +1,5 @@
 package io.github.khawajaabdullah.byakugankensaku.util;
 
-import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 public final class Constant {
@@ -10,7 +8,6 @@ public final class Constant {
   public static final String HEADER_GITHUB_EVENT = "X-GitHub-Event";
   public static final String HEADER_HUB_SIGNATURE_256 = "X-Hub-Signature-256";
 
-  public static final Charset UTF_8 = StandardCharsets.UTF_8;
   public static final String ASSIGNMENT_OPERATOR = "=";
 
   public static final String PULL_REQUEST_EVENT = "pull_request";
