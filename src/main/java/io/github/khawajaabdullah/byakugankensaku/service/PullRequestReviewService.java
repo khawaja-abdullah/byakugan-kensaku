@@ -10,6 +10,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+import static io.github.khawajaabdullah.byakugankensaku.util.Constant.REVIEWABLE_PULL_REQUEST_EVENT_ACTIONS;
+
 @Service
 @RequiredArgsConstructor
 public class PullRequestReviewService {
@@ -19,7 +21,7 @@ public class PullRequestReviewService {
 
   @Async
   public void reviewIfApplicable(PullRequestEvent pullRequestEvent) {
-    if (!Constant.REVIEWABLE_PULL_REQUEST_EVENT_ACTIONS.contains(pullRequestEvent.action())) return;
+    if (!REVIEWABLE_PULL_REQUEST_EVENT_ACTIONS.contains(pullRequestEvent.action())) return;
 
     List<FileDiff> fileDiffs = githubService.getDiff(pullRequestEvent);
     fileDiffs.forEach(fileDiff -> {

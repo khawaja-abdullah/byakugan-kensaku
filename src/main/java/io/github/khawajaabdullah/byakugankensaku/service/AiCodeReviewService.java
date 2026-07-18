@@ -15,33 +15,12 @@ import org.springframework.stereotype.Service;
 import java.util.Collections;
 import java.util.List;
 
+import static io.github.khawajaabdullah.byakugankensaku.util.Constant.PROMPT;
+
 @Service
 @RequiredArgsConstructor
 @Slf4j
 public class AiCodeReviewService {
-
-  private static final String PROMPT = """
-      You are an expert Java code reviewer. Review the following git diff and identify:
-      - Bugs or logic errors
-      - Security vulnerabilities
-      - Performance issues (N+1 queries, unnecessary loops)
-      - Missing null checks
-      - Poor naming or readability issues
-      
-      For each issue found, respond in this exact JSON format:
-      [
-        {
-          "line": <line number in the diff>,
-          "comment": "<your review comment>"
-        }
-      ]
-      
-      If no issues found, respond with an empty array: []
-      Only respond with JSON. No explanation outside the JSON.
-      
-      Diff to review:
-      %s
-      """;
 
   private final ChatClient chatClient;
   private final ObjectMapper objectMapper;

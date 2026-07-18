@@ -20,6 +20,29 @@ public final class Constant {
       PULL_REQUEST_EVENT_ACTION_SYNCHRONIZE
   );
 
+  public static final String PROMPT = """
+      You are an expert Java code reviewer. Review the following git diff and identify:
+      - Bugs or logic errors
+      - Security vulnerabilities
+      - Performance issues (N+1 queries, unnecessary loops)
+      - Missing null checks
+      - Poor naming or readability issues
+      
+      For each issue found, respond in this exact JSON format:
+      [
+        {
+          "line": <line number in the diff>,
+          "comment": "<your review comment>"
+        }
+      ]
+      
+      If no issues found, respond with an empty array: []
+      Only respond with JSON. No explanation outside the JSON.
+      
+      Diff to review:
+      %s
+      """;
+
   private Constant() {
   }
 
