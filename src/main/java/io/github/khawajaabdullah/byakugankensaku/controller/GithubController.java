@@ -12,22 +12,24 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
+import static io.github.khawajaabdullah.byakugankensaku.util.Constant.CONTROLLER_ENDPOINT_GITHUB;
+import static io.github.khawajaabdullah.byakugankensaku.util.Constant.ACTION_ENDPOINT_WEBHOOK;
 import static io.github.khawajaabdullah.byakugankensaku.util.Constant.HEADER_GITHUB_HOOK_ID;
 import static io.github.khawajaabdullah.byakugankensaku.util.Constant.HEADER_GITHUB_EVENT;
 import static io.github.khawajaabdullah.byakugankensaku.util.Constant.HEADER_HUB_SIGNATURE_256;
 import static io.github.khawajaabdullah.byakugankensaku.util.Constant.PULL_REQUEST_EVENT;
 
-@Slf4j
-@RequiredArgsConstructor
-@RequestMapping("/github")
 @RestController
+@RequestMapping(CONTROLLER_ENDPOINT_GITHUB)
+@RequiredArgsConstructor
+@Slf4j
 public class GithubController {
 
   private final GithubProperty githubProperty;
   private final ObjectMapper objectMapper;
   private final PullRequestReviewService pullRequestReviewService;
 
-  @PostMapping("/webhook")
+  @PostMapping(ACTION_ENDPOINT_WEBHOOK)
   public void handleWebhook(@RequestHeader(HEADER_GITHUB_HOOK_ID) String githubHookId,
                             @RequestHeader(HEADER_GITHUB_EVENT) String githubEvent,
                             @RequestHeader(HEADER_HUB_SIGNATURE_256) String hubSignature256,

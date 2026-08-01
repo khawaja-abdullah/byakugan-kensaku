@@ -4,6 +4,9 @@ import java.util.List;
 
 public final class Constant {
 
+  public static final String CONTROLLER_ENDPOINT_GITHUB = "/github";
+  public static final String ACTION_ENDPOINT_WEBHOOK = "/webhook";
+
   public static final String HEADER_GITHUB_HOOK_ID = "X-Github-Hook-Id";
   public static final String HEADER_GITHUB_EVENT = "X-GitHub-Event";
   public static final String HEADER_HUB_SIGNATURE_256 = "X-Hub-Signature-256";
