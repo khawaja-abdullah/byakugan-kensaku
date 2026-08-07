@@ -48,7 +48,7 @@ public class AiCodeReviewService {
 
   private List<ReviewComment> parseReviewComments(String response) {
     try {
-      return objectMapper.readValue(response, new TypeReference<List<ReviewComment>>() {
+      return objectMapper.readValue(response, new TypeReference<>() {
       });
     } catch (JsonProcessingException e) {
       throw new ByakuganKensakuException("Failed to parse review comments from response: " + e.getMessage(), e);
