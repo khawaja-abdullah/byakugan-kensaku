@@ -23,6 +23,9 @@ public final class Constant {
       PULL_REQUEST_EVENT_ACTION_SYNCHRONIZE
   );
 
+  public static final String JSON_PROPERTY_PULL_REQUEST = "pull_request";
+  public static final String JSON_PROPERTY_FULL_NAME = "full_name";
+
   public static final String PROMPT = """
       You are an expert Java code reviewer. Review the following git diff and identify:
       - Bugs or logic errors
